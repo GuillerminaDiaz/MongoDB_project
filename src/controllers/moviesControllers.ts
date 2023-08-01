@@ -35,60 +35,13 @@ export const getApiMovies= async()=>{
             }
         i++;   
         }
-    // console.log('entrre al try');
-    // let i = 1;
-    // // while(i<3){
-    // const options = {
-    //     method: 'GET',
-    //     url: 'https://api.themoviedb.org/3/movie/popular?page=2',
-    //     headers: {
-    //       accept: 'application/json',
-    //       Authorization: 'Bearer 5ef783f42c190d86cc87dd898977a099'
-    //     }
-    //   };
-
     
-    //   const response = await axios.request(options)
-    //                             .then(function (res:any){console.log('estoy en axios');
-    //                             })
-    //                             .catch(function (err:any) {return (err)});
-    //     const {data} = response
-    //     console.log(data);
-            
-           
-        // for(let movie of data?.results){
-
-        //             let dbMovie= await MovieModel.findOne({ id_movie: movie.id})
-        
-        //             if(!dbMovie){
-        //                 apiMovies.push(
-        //                     {
-        //                         id_movie: movie.id,
-        //                         title: movie.title ,
-        //                         //genre_id
-        //                         overview: movie.overview ,
-        //                         adult: movie.adult ,
-        //                         language: movie.original_language ,
-        //                         image: movie.backdrop_path ,
-        //                         poster: movie.poster_path ,
-        //                         rating: movie.vote_average ,
-        //                         release_date: movie.release_date ,
-        //                     })
-        //                 } 
-        //                 ;
-        //             }
-        
-        
-    //     i++;
-    // }
 
     for(let film of apiMovies){
         let movieDB = new MovieModel(film)
         await movieDB.save();
     }
-    // await data?.results.map( (e:any)=> {
-    //     console.log(e.title)
-    // })
+   
     return apiMovies;
 
     } catch (error) {
