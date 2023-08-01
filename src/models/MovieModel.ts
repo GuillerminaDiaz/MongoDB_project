@@ -7,20 +7,22 @@ const movieSchema= new mongoose.Schema({
 
     //genre_id: {type: Number, required: true},
 
-    overview: {type: String, required: true},
+    overview: {type: String},
 
-    adult: {type: String, required: true},
+    adult: {type: String},
 
-    language: {type: String, required: true},
+    language: {type: String},
 
-    image: {type: String, required: true},
+    image: {type: String},
 
-    poster: {type: String, required: true},
+    poster: {type: String},
 
     rating: {type: Number, required: true},
 
-    release_date: {type: Date, required: true},
+    release_date: {type: Date},
+
+    reviews: [{type: mongoose.Schema.Types.ObjectId, ref: 'Review'}]
 
 })
 
-export const movieModel= mongoose.model('Movie', movieSchema)
+export const MovieModel= mongoose.model('Movie', movieSchema)

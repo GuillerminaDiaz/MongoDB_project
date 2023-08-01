@@ -1,3 +1,4 @@
+import moongose from 'mongoose';
 import {UserModel} from '../models/UserModel'
 
 interface IUser{
@@ -11,4 +12,9 @@ export const newUser= async(info: IUser)=>{
     await newUser.save();
     return newUser;
    
+}
+
+export const getOneUser= async(id: moongose.Types.ObjectId)=>{
+    const user= await UserModel.findById(id).populate('reviews').exec();
+    return user;
 }
