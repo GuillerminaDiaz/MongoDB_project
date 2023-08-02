@@ -3,25 +3,40 @@ import 'dotenv/config';
 import { IApiMovie } from 'interfaces/interface';
 import { MovieModel } from '../models/MovieModel';
 import mongoose from 'mongoose';
+import { getAllGenres } from './genresController';
+import { GenreModel } from '../models/GenreModel';
 
 export const getApiMovies= async()=>{
+    const genres= await getAllGenres();
+   
     let apiMovies: IApiMovie[]=[];
-    console.log('entrre al controller');
+    
     try {
         let i = 1;
         while(i<11){
         const response= await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&page=`+i)
         if(!response) throw new Error ('no hay respuesta')
+        
         for(let movie of response.data.results){
 
             let dbMovie= await MovieModel.findOne({ id_movie: movie.id})
 
             if(!dbMovie){
+           
+            let movieGenres=[];
+                for(let genId of genres){
+                    for(let i=0; i< movie.genre_ids.length; i++){
+                        if(movie.genre_ids[i]=== genId.id){
+                            movieGenres.push(genId.name)
+                        }
+                    }
+                   
+                }
                 apiMovies.push(
                     {
                         id_movie: movie.id,
                         title: movie.title ,
-                        //genre_id
+                        genre: movieGenres,
                         overview: movie.overview? movie.overview : 'no overview' ,
                         adult: movie.adult ,
                         language: movie.original_language ,
@@ -33,6 +48,7 @@ export const getApiMovies= async()=>{
                 } 
                 ;
             }
+            
         i++;   
         }
     

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 export const getAllMovies= async(req:Request, res: Response)=>{
     try {
-        const movies= await getApiMovies();
+        const movies= await allMovies();
         res.status(200).send(movies);
     } catch (error) {
         res.status(400).send(error.message)

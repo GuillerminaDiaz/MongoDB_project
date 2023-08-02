@@ -1,7 +1,7 @@
 export interface IApiMovie{
     id_movie: Number;
     title: String;
-    //genre_id
+    genre: String[];
     overview: String;
     adult: String;
     language: String;
